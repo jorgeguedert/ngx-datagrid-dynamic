@@ -1,0 +1,35 @@
+.table-hover tbody tr:hover{
+    background-color:rgba(63, 71, 173, 0.41);
+}
+
+table > thead > tr > th {
+    text-align: center;
+    background-color:#c5000973
+}
+
+table a{
+    cursor:pointer
+}
+
+.pagination-datatable a{
+    color: #0a0a0a;
+    /* display: block; */
+    padding: 0.1875rem 0.625rem;
+    border-radius: 0;
+}
+
+.pagination-datatable a:hover{
+    background: #e6e6e6
+}
+
+.pagination-datatable .current,
+.pagination-datatable .current:hover{
+    padding: 0.1875rem 0.625rem;
+    background: #2199e8;
+    color: #fefefe;
+    cursor: default;
+}
+
+.pagination-datatable a{
+    text-decoration: none;
+}

@@ -1,0 +1,54 @@
+<div class="col-lg-12">
+  <div class="row">
+    <div class="form-group col-lg-3 mb-0">
+      <input class="form-control" type="text" [(ngModel)]="_filter.search" (ngModelChange)="getResults()" placeholder="Pesquisar..."
+      />
+    </div>
+    <div class="form-group  col-lg-1 offset-lg-8 mb-0">
+      <select *ngIf="pagination" [(ngModel)]="_filter.rowsPerPage" (ngModelChange)="setPage(1)" class="form-control ">
+        <option *ngFor="let opt of selectRowsPerPage">
+          {{opt}}
+        </option>
+      </select>
+    </div>
+  </div>
+  <table class="table table-bordered table-striped table-sm table-hover">
+    <thead>
+      <tr>
+        <th *ngFor="let c of columns" (click)="setOrder(c.dataField, $event, c)">{{c.header}}
+          <i class="material-icons float-right">{{c.orderDirection}}</i>
+        </th>
+        <th *ngIf="buttons && buttons.length > 0"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let result of _results">
+        <td *ngFor="let c of columns">
+          <span *ngIf="c.outputType == null || c.outputType == 0">
+            {{result[c.dataField]}}
+          </span>
+          <input type="checkbox" *ngIf="c.outputType == 1" [checked]="result[c.dataField]" disabled="disabled" />
+          <span *ngIf="c.outputType == 2">
+            {{result[c.dataField] | date}}
+          </span>
+        </td>
+        <td *ngIf="buttons && buttons.length > 0">
+          <a *ngFor="let b of buttons" (click)="b.action(result)">
+            <i class="material-icons" [style.color]="b.color">{{b.icon}}</i>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="pagination" class="col-lg-12 text-center pagination-datatable" >
+    <a *ngFor="let p of _pages" href="#" (click)="setPage(p)" [ngClass]="{'current': p == _filter.page}">
+      <span>{{p}}</span>
+    </a>
+    <span class="float-right">{{_filter.page > 1 ? (_filter.page * _filter.rowsPerPage) - _filter.rowsPerPage +1 : 1}} a {{_filter.page * _filter.rowsPerPage
+      > _totalRows ? _totalRows :_filter.page * _filter.rowsPerPage}} (Total de {{_totalRows}})
+    </span>
+  </div>
+  <div *ngIf="!pagination" class="pagination">
+    <span>{{_totalRows}} Registros</span>
+  </div>
+</div>
